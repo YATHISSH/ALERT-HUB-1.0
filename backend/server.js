@@ -102,10 +102,10 @@ const Post = mongoose.model('Post', postSchema);
 
 app.use(
   session({
-    secret: "8f767ac8fe2f0564e01e2e911ffc81f87c8bd262414a581880d1b3e3dae916fb",
+    secret: "",
     resave: true,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://atchayaa135:atc1305h@cluster0.d0q3jph.mongodb.net/Personalization' }),
+    store: MongoStore.create({ mongoUrl: '' }),
     cookie:{
       maxAge:null
     }
@@ -144,7 +144,7 @@ app.post('/api/login', async (req, res) => {
     }
     
     // Generate a unique token
-    const token = jwt.sign({ userId: user._id }, "8f767ac8fe2f0564e01e2e911ffc81f87c8bd262414a581880d1b3e3dae916fb", {
+    const token = jwt.sign({ userId: user._id }, "", {
       expiresIn: '100y' // Set expiration time as needed
     });
     req.session.email = user.email;
