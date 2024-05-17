@@ -102,7 +102,7 @@
 }
 .info-follow button:hover{
     border: none;
-    background: linear-gradient(107deg, rgb(255, 67, 5) 11.1%, rgb(245, 135, 0) 95.3%);
+    background: linear-gradient(107deg, rgb(5, 222, 255) 11.1%, rgb(0, 147, 245) 95.3%);
     color: #fff;
   
 }
@@ -117,7 +117,7 @@
     gap: 8px;
     align-items: center;
     font-size: 13px;
-    background: linear-gradient(107deg, rgb(255, 67, 5) 11.1%, rgb(245, 135, 0) 95.3%);
+    background: linear-gradient(107deg, rgb(8, 149, 210) 11.1%, rgb(8, 81, 113) 95.3%);
     color: #fff;
     padding: 5px 10px;
     border-radius: 10px;

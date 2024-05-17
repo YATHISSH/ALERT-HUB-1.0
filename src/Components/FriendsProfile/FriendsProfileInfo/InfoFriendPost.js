@@ -14,12 +14,7 @@ import {BiLogoLinkedin} from "react-icons/bi"
 import {AiFillYoutube} from "react-icons/ai"
 import {RxTwitterLogo} from "react-icons/rx"
 import {FiGithub} from "react-icons/fi"
-
-import img1 from "../../../assets/Following/img-2.jpg"
-import img2 from  "../../../assets/Following/img-3.jpg"
-import img3 from  "../../../assets/Following/img-4.jpg"
-import Comments from '../../Comments/Comments';
-import Profile from "../../../assets/profile.jpg"
+import Profile from "../../../assets/profile.png"
 
 
 const InfoFriendPost = ({val}) => {
@@ -27,7 +22,7 @@ const InfoFriendPost = ({val}) => {
     const [comments,setComments] =useState([
         {
             id:1,
-            profilePic:img1,
+            profilePic:"",
             likes:23,
             username:"Violet",
             time:"3 Hours Ago",
@@ -35,7 +30,7 @@ const InfoFriendPost = ({val}) => {
         },
         {
             id:2,
-            profilePic:img2,
+            profilePic:"",
             likes:5,
             username:"Brandon",
             time:"1 Hour Ago",
@@ -43,7 +38,7 @@ const InfoFriendPost = ({val}) => {
         },
         {
             id:3,
-            profilePic:img3,
+            profilePic:"",
             likes:50,
             username:"Lilly",
             time:"30 Mins Ago",
@@ -201,7 +196,7 @@ const InfoFriendPost = ({val}) => {
 
       <div className="sticky">
         {comments.map((cmt)=>(
-          <Comments 
+          <comments 
           className="classComment"
           cmt={cmt}
           key={cmt.id}

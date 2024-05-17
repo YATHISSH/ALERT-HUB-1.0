@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import Left from '../../Components/LeftSide/Left'
 import ProfileMiddle from '../../Components/Profile/ProfileMiddle'
-import Right from '../../Components/RightSide/Right'
+
 import Nav from '../../Components/Navigation/Nav'
 import "../Profile/Profile.css"
-import ProfileImg from "../../assets/profile.jpg"
+import ProfileImg from "../../assets/profile.png"
 
 const Profile = () => {
 
@@ -21,10 +21,9 @@ const Profile = () => {
 
   const [modelDetails,setModelDetails] = useState(
     {
-      ModelName:"Vijay",
-      ModelUserName:"@Vijay98",
-      ModelCountryName:"India",
-      ModelJobName:"Web Developer in Google"
+      ModelName:sessionStorage.getItem('name'),
+      ModelEmail:sessionStorage.getItem('email'),
+      ModelScore:sessionStorage.getItem('score'),
     }
   )
 
@@ -61,15 +60,11 @@ const Profile = () => {
         setModelDetails={setModelDetails}
         />
         
-        <Right 
-        showMenu={showMenu}
-        setShowMenu={setShowMenu}
-        following={following}
-        setFollowing={setFollowing}
-        />
+       
       </div>
     </div>
   )
 }
+
 
 export default Profile

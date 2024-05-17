@@ -22,13 +22,13 @@
     outline: none;
 }
 .modelForm .inputBox1 input:focus{
-    border: 1px solid orangered;
+    border: 1px solid rgb(8, 81, 113);
 }
 .modelBtn{
     font-size: 16px;
     padding: 10px 20px;
     text-transform: capitalize;
-    background: linear-gradient(107deg, rgb(255, 67, 5) 11.1%, rgb(245, 135, 0) 95.3%);
+    background: linear-gradient(107deg, rgb(6, 128, 180) 11.1%, rgb(8, 81, 113) 95.3%);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -50,7 +50,7 @@
         font-size: 14px;
         padding: 5px 10px;
         text-transform: capitalize;
-        background-color: orangered;
+        background-color: rgb(8, 81, 113);
         color: #fff;
         border: none;
         border-radius: 5px;

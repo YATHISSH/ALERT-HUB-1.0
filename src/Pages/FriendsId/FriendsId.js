@@ -3,7 +3,7 @@ import Nav from '../../Components/Navigation/Nav'
 import Left from '../../Components/LeftSide/Left'
 import FriendsProfileMiddle from '../../Components/FriendsProfile/FriendsProfileMiddle'
 import { useState } from 'react'
-import Right from '../../Components/RightSide/Right'
+
 import "../FriendsId/FriendsId.css"
 
 const FriendsId = ({friendProfile}) => {
@@ -23,13 +23,8 @@ const FriendsId = ({friendProfile}) => {
              />
         <div className="home">
             <Left />
-            <FriendsProfileMiddle friendProfile={friendProfile}/>
-            <Right
-              showMenu={showMenu}
-              setShowMenu={setShowMenu}
-              following={following}
-              setFollowing={setFollowing}
-            />
+            {/* <FriendsProfileMiddle friendProfile={friendProfile}/> */}
+            
         </div>
     </div>
   )

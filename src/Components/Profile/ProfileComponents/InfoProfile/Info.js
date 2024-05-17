@@ -3,7 +3,7 @@ import "../InfoProfile/Info.css"
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import WorkOutlineRoundedIcon from '@mui/icons-material/WorkOutlineRounded';
-import Info3 from "../../../../assets/Info-Dp/img-3.jpg"
+// import Info3 from "../../../../assets/Info-Dp/img-3.jpg"
 
 import {LiaEdit} from "react-icons/lia"
 
@@ -12,7 +12,7 @@ import {BiLogOut} from "react-icons/bi"
 import { useRef } from 'react';
 import ModelProfile from '../ModelProfile/ModelProfile';
 import { Link } from 'react-router-dom';
-
+import { SiGmail } from "react-icons/si";
 const Info = ({userPostData,
               following,
               modelDetails,
@@ -25,7 +25,7 @@ const Info = ({userPostData,
               setUserName}) => {
 
 
-  const [coverImg,setCoverImg] =useState(Info3)
+  const [coverImg,setCoverImg] =useState('')
 
   const importProfile=useRef()
   const importCover =useRef()
@@ -79,10 +79,10 @@ const Info = ({userPostData,
 
     <div className='info'>
         <div className="info-cover">
-            <img src={coverImg} alt="" />
-            <img src={profileImg} alt="" />
-            <div className='coverDiv'><IoCameraOutline className='coverSvg' onClick={()=>importCover.current.click()}/></div>
-            <div className='profileDiv'><IoCameraOutline className='profileSvg' onClick={()=>importProfile.current.click()}/></div>
+            <img src={"https://static.vecteezy.com/system/resources/previews/007/815/451/original/banner-eco-friendly-sustainability-development-concept-and-world-environmental-day-vector.jpg"} alt="" />
+            <img src={"https://static-00.iconduck.com/assets.00/user-icon-2048x2048-ihoxz4vq.png"} alt="" />
+            {/* <div className='coverDiv'><IoCameraOutline className='coverSvg' onClick={()=>importCover.current.click()}/></div>
+            <div className='profileDiv'><IoCameraOutline className='profileSvg' onClick={()=>importProfile.current.click()}/></div> */}
         </div>
       
 
@@ -129,33 +129,33 @@ const Info = ({userPostData,
           <div className="info-details">
             <div className="info-col-1">
               <div className="info-details-list">
+                {/* <LocationOnOutlinedIcon />
+                <span>{modelDetails.ModelCountryName}</span> */}
+              </div>
+
+              <div className="info-details-list">
+                <SiGmail />
+                <span style={{margin:"10px"}}>  {sessionStorage.getItem('email')}</span>
+              </div>
+
+              <div className="info-details-list">
                 <LocationOnOutlinedIcon />
-                <span>{modelDetails.ModelCountryName}</span>
-              </div>
-
-              <div className="info-details-list">
-                <WorkOutlineRoundedIcon />
-                <span>{modelDetails.ModelJobName}</span>
-              </div>
-
-              <div className="info-details-list">
-                <CalendarMonthRoundedIcon />
-                <span>Joined in 2023-08-12</span>
+                <span style={{margin:"10px"}}>{sessionStorage.getItem('pincode')}</span>
               </div>
             </div>
 
             <div className="info-col-2">
               <div>
-                <h2>5,000</h2>
-                <span>Followers</span>
+                {/* <h2>5,000</h2>
+                <span>Followers</span> */}
+              </div>
+              <div>
+                <h2>{sessionStorage.getItem('score')}☘️</h2>
+                <span>Xps</span>
               </div>
               <div>
                 <h2>{userPostData.length}</h2>
                 <span>Posts</span>
-              </div>
-              <div>
-                <h2>{following}</h2>
-                <span>Following</span>
               </div>
             </div>
 

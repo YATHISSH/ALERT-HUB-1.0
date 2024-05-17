@@ -11,7 +11,7 @@ const Feedposts = ({posts,setPosts,setFriendsProfile,images}) => {
             post ={post}
             setPosts={setPosts}
             key={post.id} 
-            setFriendsProfile={setFriendsProfile}
+            
             />
         ))}
     </div>

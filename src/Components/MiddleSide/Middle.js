@@ -3,6 +3,7 @@ import InputPost from '../Post/InputPost'
 import Homepage from "../Home/Homepage"
 import "../MiddleSide/Middle.css"
 
+import axios from 'axios';
 
 const Middle = ({handleSubmit,
                 body,
@@ -22,15 +23,33 @@ const Middle = ({handleSubmit,
   
     const [searchResults,setSearchResults] =useState("")
     
-    useEffect(()=>{
-      const searchData = posts.filter((val)=>(
-        (val.body.toLowerCase().includes(search.toLowerCase()))
-       ||
-       (val.username.toLowerCase().includes(search.toLowerCase()))
-       ))
-       setSearchResults(searchData)
-       
-    },[posts,search])
+    
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          if (search.trim() !== '') {
+            const response = await axios.get(
+              `http://localhost:5000/api/search?search=${encodeURIComponent(search)}`,
+              { 
+                withCredentials: true,
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }
+            );
+            setSearchResults(response.data);
+          }
+          else{
+            setSearchResults([]);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchData();
+    }, [search]);
+    
   
   return (
     <div className='M-features'>
@@ -47,11 +66,13 @@ const Middle = ({handleSubmit,
         />
 
         <Homepage 
-        posts ={searchResults}
+        posts ={posts}
         setPosts={setPosts}
         setFriendsProfile={setFriendsProfile}
         images={images}
+        searchResults={searchResults}
         />
+
     </div>
   )
 }

@@ -1,13 +1,10 @@
 import Info from './ProfileComponents/InfoProfile/Info'
 import UserHome from '../UserHome/UserHome'
 
-import Profile from "../../assets/profile.jpg"
-import img1 from "../../assets/User-post/img1.jpg"
-import img2 from "../../assets/User-post/img2.jpg"
-import img3 from "../../assets/User-post/img3.jpg"
+import Profile from "../../assets/profile.png"
 import { useEffect, useState } from 'react'
 import "../Profile/ProfileMiddle.css"
-
+import axios from 'axios'
 import moment from 'moment'
 import ProfileInputPost from './ProfileComponents/ProfileInputPost'
 
@@ -25,39 +22,24 @@ const ProfileMiddle = ({following,
                         setModelDetails}) => {
 
   const [userPostData ,setUserPostData] =useState(
-    [
-      {
-        id:1,
-        username:"Vijay",
-        profilepicture:Profile,
-        img:img1,
-        datetime:moment("20230401", "YYYYMMDD").fromNow(),
-        body:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia illum provident consequuntur reprehenderit tenetur, molestiae quae blanditiis rem placeat! Eligendi, qui quia quibusdam dolore molestiae veniam neque fuga explicabo illum?",
-        like: 22,
-        comment:12
-    },
-    {
-        id:2,
-        username:"Vijay",
-        profilepicture:Profile,
-        img:img2,
-        datetime:moment("20230525", "YYYYMMDD").fromNow(),
-        body:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia illum provident consequuntur reprehenderit tenetur, molestiae quae blanditiis rem placeat! Eligendi, qui quia quibusdam dolore molestiae veniam neque fuga explicabo illum?",
-        like: 84,
-        comment:30
-    },
-    {
-        id:3,
-        username:"Vijay",
-        profilepicture:Profile,
-        img:img3,
-        datetime:moment.utc("2023-08-13 12:45:00").local().startOf('seconds').fromNow(),
-        body:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia illum provident consequuntur reprehenderit tenetur, molestiae quae blanditiis rem placeat! Eligendi, qui quia quibusdam dolore molestiae veniam neque fuga explicabo illum?",
-        like: 340,
-        comment:76
-    }
-    ]
-  )
+    []
+  );
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      try {
+        const userId = sessionStorage.getItem('name'); // Adjust the storage key as per your implementation
+        //console.log(userId);
+        const response = await axios.get(`http://localhost:5000/api/posts/${userId}`);
+        console.log(response.data);
+        setUserPostData(response.data);
+        //console.log(userPostData);
+      } catch (error) {
+        console.error('Error fetching user posts:', error);
+      }
+    };
+
+    fetchUserPosts();
+  }, []);
   const [body,setBody] =useState("")
   const [importFile,setImportFile] =useState("")
   
@@ -67,8 +49,8 @@ const ProfileMiddle = ({following,
     e.preventDefault()
 
   
-    const id =userPostData.length ? userPostData[userPostData.length -1].id +1 :1
-    const username="Vijay"
+    const id =userPostData.length ? userPostData[userPostData.length -1]._id +1 :1
+    const username=sessionStorage.getItem('name')
     const profilepicture=Profile
     const datetime=moment.utc(new Date(), 'yyyy/MM/dd kk:mm:ss').local().startOf('seconds').fromNow()
     const img= images ? {img:URL.createObjectURL(images)} : null
@@ -95,15 +77,14 @@ const ProfileMiddle = ({following,
 
   const [searchResults,setSearchResults] =useState("")
     
-    useEffect(()=>{
-      const searchData = userPostData.filter((val)=>(
-        (val.body.toLowerCase().includes(search.toLowerCase()))
-       ||
-       (val.username.toLowerCase().includes(search.toLowerCase()))
-       ))
-       setSearchResults(searchData)
-       
-    },[userPostData,search])
+  useEffect(() => {
+    const searchData = userPostData.filter((val) => (
+      (val.body && val.body.toLowerCase().includes(search.toLowerCase())) ||
+      (val.username && val.username.toLowerCase().includes(search.toLowerCase()))
+    ));
+    setSearchResults(searchData);
+  }, [userPostData, search]);
+  
 
    
 
@@ -140,7 +121,7 @@ const ProfileMiddle = ({following,
         modelDetails={modelDetails}
         profileImg={profileImg}
         setUserPostData={setUserPostData}
-        userPostData={searchResults}
+        userPostData={userPostData}
         images={images}
         />
     </div>

@@ -2,7 +2,7 @@
     width: 100%;
 }
 .home{
-    width: 100vw;
+    width: 125vw;
     min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 3fr 1.2fr;

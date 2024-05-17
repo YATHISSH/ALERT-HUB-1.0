@@ -8,3 +8,8 @@
        margin-bottom: 62px;
     }
 }
+/* Inside ProfileMiddle.css */
+.logout-btn,
+.edit-profile-btn {
+  color: rgb(8, 81, 113);
+}

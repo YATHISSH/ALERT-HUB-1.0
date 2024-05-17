@@ -7,7 +7,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import SendRoundedIcon from '@mui/icons-material/SendRounded';
 import SentimentSatisfiedRoundedIcon from '@mui/icons-material/SentimentSatisfiedRounded';
-
+import { IoMdTrendingUp } from "react-icons/io"; 
 import {PiSmileySad} from "react-icons/pi"
 import {IoVolumeMuteOutline} from "react-icons/io5"
 import {MdBlockFlipped} from "react-icons/md"
@@ -21,63 +21,62 @@ import {AiFillYoutube} from "react-icons/ai"
 import {RxTwitterLogo} from "react-icons/rx"
 import {FiGithub} from "react-icons/fi"
 
-import img1 from "../../assets/Following/img-2.jpg"
-import img2 from  "../../assets/Following/img-3.jpg"
-import img3 from  "../../assets/Following/img-4.jpg"
 
-import Profile from "../../assets/profile.jpg"
+import Profile from "../../assets/profile.png"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Comments from '../Comments/Comments';
 import moment from 'moment';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 
 
 const Post = ({post,posts,setPosts,setFriendsProfile,images}) => {
-
-  const [comments,setComments] =useState([
-    {
-        id:1,
-        profilePic:img1,
-        likes:23,
-        username:"Violet",
-        time:"3 Hours Ago",
-        comment:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse asperiores debitis saepe itaque, eligendi quasi laboriosam vitae voluptatem animi maiores voluptatibus."
-    },
-    {
-        id:2,
-        profilePic:img2,
-        likes:5,
-        username:"Brandon",
-        time:"1 Hour Ago",
-        comment:"Lorem ipsum dolor sit amet consectetur adipisicing elit."
-    },
-    {
-        id:3,
-        profilePic:img3,
-        likes:50,
-        username:"Lilly",
-        time:"30 Mins Ago",
-        comment:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse asperiores debitis saepe itaque, eligendi quasi"
-    }
-])
+  console.log(post);
+  const [comments,setComments] =useState([])
 
 
-
-  const [like,setLike] =useState(post.like)
-  const [unlike,setUnlike] =useState(false)
+  const [upvoted,setUpvoted]=useState(false)
+  const [alreadyUpvoted,setAlreadyUpvoted]=useState(false)
+  const [like,setLike] = useState(post.upvotes.length);
+  const [unlike,setUnlike] = useState(false)
+  const [upvoteMessage, setUpvoteMessage] = useState('');
 
   const [filledLike,setFilledLike] =useState(<FavoriteBorderOutlinedIcon />)
   const [unFilledLike,setUnFilledLike] =useState(false)
 
-  const handlelikes=()=>{
-    setLike(unlike ? like -1 :like +1)
-    setUnlike(!unlike)
+  const handlelikes = async () => {
+    console.log("handlelikes called");
+    try {
+      const post_email = sessionStorage.getItem('email');
+      // Send a request to your server to increment the upvotes for the post
+      const response = await axios.post(
+        `http://localhost:5000/api/posts/upvote/${post._id}`,
+        { email: post_email },
+        { 
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response);
+      // Ensure the request was successful
+      // if (!response.ok) {
+      //   throw new Error('Failed to upvote post');
+      // }
 
-    setFilledLike(unFilledLike ?   <FavoriteBorderOutlinedIcon /> : <FavoriteRoundedIcon />)
-    setUnFilledLike(!unFilledLike)
-  }
+      // Update the local state with the updated upvotes count
+      setLike(response.data.upvotes);
+      setUpvoted(!upvoted);
+      setUpvoteMessage(response.data.message);
+
+    } catch (error) {
+      console.error('Error upvoting post:', error.message);
+    }
+  };
+  
  
 
   const [showDelete,setShowDelete] = useState(false)
@@ -113,29 +112,28 @@ const handleDelete=(id)=>{
     setCommentInput("")
   }
 
-   const handleFriendsId=(id)=>{
-      const friendsIdFilter = posts.filter(val => val.id === id)
-      setFriendsProfile(friendsIdFilter)
-   }
+  //  const handleFriendsId=(id)=>{
+  //     const friendsIdFilter = posts.filter(val => val.id === id)
+  //     setFriendsProfile(friendsIdFilter)
+  //  }
 
    const [socialIcons,setSocialIcons] = useState(false)
-
 
 
 
   return (
     <div className='post'>
       <div className='post-header'>
-        <Link to="/FriendsId" style={{textDecoration:"none"}}>
-        <div className='post-user' onClick={()=>handleFriendsId(post.id)} style={{cursor:"pointer"}}>
-            <img src={post.profilepicture} className='p-img' alt="" />
-            <h2>{post.username}</h2>
-            <p className='datePara'>{post.datetime}</p>
+        {/* <Link to="/FriendsId" style={{textDecoration:"none"}}> */}
+        <div className='post-user' style={{cursor:"pointer"}}>
+            <img src={"https://static-00.iconduck.com/assets.00/user-icon-2048x2048-ihoxz4vq.png"} className='p-img' alt="" />
+            <h2>{post.userId}</h2>
+            <p className='datePara'>{moment(post.createdAt).fromNow()}</p>
         </div>
-        </Link>
-         
-         <div className='delete'>
-         {showDelete && (<div className="options">
+        {/* </Link> */}
+          
+         {/* <div className=''>
+         {showDelete && (<div className="">
             <button><PiSmileySad />Not Interested in this post</button>
             <button><IoVolumeMuteOutline />Mute this user</button>
             <button><MdBlockFlipped />Block this user</button>
@@ -145,15 +143,16 @@ const handleDelete=(id)=>{
         
          )}
           <MoreVertRoundedIcon className='post-vertical-icon' onClick={()=>setShowDelete(!showDelete)}/>
-         </div>
+         </div> */}
        </div>
 
-        <p className='body'>{
-        (post.body).length <=300 ?
-        post.body : `${(post.body).slice(0,300)}...`
-        }</p>
+       <p className='body'>
+          {post.content && post.content.length <= 300
+            ? post.content
+            : post.content && `${post.content.slice(0, 300)}...`}
+        </p>
 
-       {post.img && (<img src={post.img} alt="" className="post-img" />)}
+        {post.filepath && (<img src={`http://localhost:5000/uploads/${post.filepath}`} alt="" className="post-img" />)}
   
 
 
@@ -164,13 +163,19 @@ const handleDelete=(id)=>{
             onClick={handlelikes}
             style={{marginTop:"5px"}}
           >
-              {filledLike}
+              {}
           </p>
 
-          <MessageRoundedIcon 
+          <IoMdTrendingUp className='msg' onClick={handlelikes} />
+          {upvoteMessage && (
+          <p className={upvoteMessage === 'Upvoted!' ? 'upvote-success' : 'downvote-success'}>
+            {upvoteMessage}
+          </p>
+        )}
+          {/* <MessageRoundedIcon 
             onClick= {()=>setShowComment(!showComment)}
             className='msg'  
-          />
+          /> */}
 
           <ShareOutlinedIcon 
             onClick={()=>setSocialIcons(!socialIcons)}
@@ -221,8 +226,8 @@ const handleDelete=(id)=>{
         
 
         <div className="like-comment-details">
-          <span className='post-like'>{like} people like it,</span>
-          <span className='post-comment'>{comments.length} comments</span>
+          <span className='post-like'>{like} people upvoted it</span>
+          {/* <span className='post-comment'>{comments.length} comments</span> */}
         </div>
         
        {showComment && (<div className="commentSection">

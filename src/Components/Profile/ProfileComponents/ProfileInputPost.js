@@ -16,9 +16,9 @@ const ProfileInputPost = ({handleSubmit,
                             modelDetails
                         }) => {
   return (
-    <div className="i-form">
+    <div className="i-for">
         <form onSubmit={handleSubmit}>
-            <div className="i-input-box">
+            {/* <div className="i-input-box">
                 <img src={profileImg} className='i-img'/>
                 
                 <input 
@@ -73,10 +73,10 @@ const ProfileInputPost = ({handleSubmit,
             <CloseRoundedIcon onClick={()=>setImages(null)}/>
             <img src={URL.createObjectURL(images)} alt="" />
           </div>
-        )}
+        )}*/}
 
         </form>
-     </div>
+     </div> 
   )
 }
 

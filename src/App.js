@@ -6,6 +6,12 @@ import { Route, Routes } from 'react-router-dom'
 import Notification from './Pages/Notification/Notification'
 import Login from './Pages/RegisterPage/Login'
 import SignUp from './Pages/RegisterPage/SignUp'
+import UpvotedPostsPage from './Components/Home/myupvotes'
+import MyPostsPage from './Components/Home/mypost'
+import TermsPage from './Components/Home/Terms'
+import Dashboard from './Components/Home/dashboard'
+
+
 
 const App = () => {
   const [friendProfile,setFriendsProfile] =useState([])
@@ -19,7 +25,13 @@ const App = () => {
 
         <Route path='/friendsId' element={<FriendsId friendProfile={friendProfile} />} />
       
-        <Route path='/notification' element={<Notification />} />
+        {/* <Route path='/notification' element={<Notification />} /> */}
+
+        <Route path="/upvotedposts" element={<UpvotedPostsPage/>} />
+        <Route path="/terms" element={<TermsPage />}/>
+        {/* <Route path="/dashboard" element={<Dashboard/>}/> */}
+        
+        <Route path="/myposts" element={<MyPostsPage/>} />
 
         <Route path='/' element={<Login />} />
 
