@@ -8,6 +8,8 @@
 - React js
 * CSS3
 - Node.js
+- Mongo DB
+- Express.js
   
 # Features🗒:
 
